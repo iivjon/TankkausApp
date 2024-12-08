@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:charts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             x:Class="TankkausApp.MainPage">
+    <ContentPage Title="Lisää tankkaus">
+        <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="logo1_0.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                HorizontalOptions="Fill"
+                SemanticProperties.Description="Tankkaus app" />
+
+            <StackLayout>
+
+
+                <Label Text="Täytä alla olevat kentät ja paina lopuksi TALLENNA nappulaa." FontSize="20"/>
+                <Label/>
+                <Label TextColor="Red" Text="Tähdellä (*) merkityt kentät ovat pakollisia!" FontSize="10"/>
+                <Label/>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Padding="0,5" HorizontalOptions="Start" FontSize="15" Text="Rekisterinumero *"/>
+                    <Entry WidthRequest="80" HeightRequest="35" TextColor="Black" BackgroundColor="Lavender" HorizontalOptions="CenterAndExpand" 
+                           x:Name="inputKenttaRek" Placeholder="ABC-123" MaxLength="7" TextChanged="inputKenttaRek_TextChanged" />
+                    <Label Text="    "/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Padding="0,5,50,0" HorizontalOptions="Start" FontSize="15" Text="Tankatut litrat:"/>
+                    <Entry WidthRequest="80" HeightRequest="35" TextColor="Black" BackgroundColor="Lavender" HorizontalOptions="CenterAndExpand" x:Name="inputKenttaLitrat" Placeholder="32.50" />
+                    <Label Padding="0,5" FontSize="15" Text="Litraa"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Padding="0,5,46,0" HorizontalOptions="Start" FontSize="15" Text="Tankatut eurot:"/>
+                    <Entry WidthRequest="80" HeightRequest="35" TextColor="Black" BackgroundColor="Lavender" HorizontalOptions="CenterAndExpand" x:Name="inputKenttaEurot" Placeholder="60.00" />
+                    <Label Padding="0,5" FontSize="15" Text="Euroa"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Padding="0,5,31,0" HorizontalOptions="Start" FontSize="15" Text="Mittari lukema:"/>
+                    <Entry WidthRequest="80" HeightRequest="35" TextColor="Black" BackgroundColor="Lavender" HorizontalOptions="CenterAndExpand" x:Name="inputKenttaKilometrit" Placeholder="150000" />
+                    <Label Padding="0,5" FontSize="15" Text="Km"/>
+                </StackLayout>
+                <Label/>
+                <Button Text="Tallenna" x:Name="tallenna" Clicked="tallenna_Clicked"/>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" VerticalOptions="End">
+
+                <Label VerticalOptions="End" Text="Made by Joni" HorizontalTextAlignment="Center" TextColor="SandyBrown" FontSize="14"/>
+
+            </StackLayout>
+
+
+
+        </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <ContentPage Title="Tankkaus info">
+        <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center">
+            <Label FontAttributes="Bold" FontSize="20" Text="Syötä rekisterinumero niin saat listan tankkaustapahtumista"></Label>
+            <Label></Label>
+            <Button Text="Hae" x:Name="haku" Clicked="haku_Clicked" WidthRequest="100" HeightRequest="50"></Button>
+            <Label/>
+            <Label FontSize="17" Text=""/>
+            <StackLayout Orientation="Horizontal">
+ 
+            <Entry WidthRequest="80" HeightRequest="35" TextColor="Black" BackgroundColor="Lavender" HorizontalOptions="CenterAndExpand" 
+                         x:Name="inputKenttaRekhaku" Placeholder="ABC-123" MaxLength="7" TextChanged="inputKenttaRekhaku_TextChanged" />
+            <Label Text=""/>
+                <Label Text=""/>
+        </StackLayout>
+            <Label Text=""/>
+            <Label x:Name="rekisteriLabel" FontSize="25" Text=""/>
+
+            <CollectionView x:Name="TankkausLista"
+                        IsVisible="False">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5" Orientation="Vertical">
+                            <Label FontSize="15" Text="{Binding PaivaMaara, StringFormat='Päivämäärä: {0:dd.MM.yyyy}'}" />
+                            <Label Text="{Binding TankatutLitrat, StringFormat='Litrat:{0:F2}'}" />
+                            <Label Text="{Binding TankatutEurot, StringFormat='Eurot: {0:C2}'}" />
+                            <Label Text="{Binding AjoKilometrit, StringFormat='Kilometrit: {0:N0}'}" />
+                            <Label FontSize="17" FontAttributes="Bold" Text="{Binding Litrahinta, StringFormat='Litrahinta: {0:C2}'}" />
+                            <BoxView HeightRequest="1" BackgroundColor="Pink" Margin="0,10,0,10"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+
+        </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+    <ContentPage Title="Tankkaus kaavio">
+        <VerticalStackLayout Padding="20">
+        <Label Text="Kaaviosta näet valitun ajoneuvosi kuukauden tankkaus määrät euroina" HorizontalOptions="Center" FontAttributes="Bold"/>
+            <charts:ChartView x:Name="TankkausKaavio" HeightRequest="500" />
+
+        </VerticalStackLayout>
+    </ContentPage>
+
+</TabbedPage>
