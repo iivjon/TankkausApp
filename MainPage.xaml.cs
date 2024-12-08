@@ -287,9 +287,13 @@ namespace TankkausApp
                     // Lasketaan litrahinta ja lisätään jokaiseen tankkaukseen
                     foreach (var tankkaus in tankkaukset)
                     {
-                        if (tankkaus.TankatutLitrat > 0)
+                        if (tankkaus.TankatutLitrat > 0 && tankkaus.TankatutEurot > 0)
                         {
                             tankkaus.Litrahinta = tankkaus.TankatutEurot / tankkaus.TankatutLitrat;
+                        }
+                        else 
+                        {
+                            tankkaus.Litrahinta = 0; //Jos tankkaus euroja tai litroja ei ole ilmoitettu litrahinta on 0
                         }
                     }
                     string reknum = inputKenttaRekhaku.Text;
